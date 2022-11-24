@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-image: url("contact.webp");
+        }
+        div{
+            justify-content: center;
+            display: flex;
+        }
+        form{
+            
+            border: 1px solid black;
+            margin: 0px 300px 0px 300px;
+            padding: 50px;
+           
+        }
+        input,button{
+            width:500px;
+        }
+        button{
+            padding: 5px;
+            font-size: 14px;
+            margin-top: 5px;
+            background-color:blueviolet ;
+        }
+        label{
+            text-align: start;
+        }
+      
+    </style>
+</head>
+<body>
+    <div>
+    <form action="#" onsubmit="submitform();">
+        <h2>Book a call slot</h2>
+        <label for="">Name</label>
+        </br>
+        <input type="text" Placeholder="Enter Name" id="name">
+        </br>
+        <label for="">Email</label>
+        </br>
+        <input type="email" Placeholder="Enter Email" id="email">
+        </br>
+        <label for="">Phone</label>
+        </br>
+        <input type="number" Placeholder="Enter Phone number" id="phone">
+        </br>
+        <label for="">Pasword</label>
+         </br>
+        <input type="text" Placeholder="Enter Password" id="password">
+        </br>
+        <label for="">Date</label>
+         </br>
+        <input type="date" Placeholder="Enter Date" style="width: 247px;" id="date">
+        <input type="time" Placeholder="Enter Time" style="width:247px" id="time">
+        </br>
+        <button type="submit">Request a call</button>
+
+       
+    </form>
+    <ul class="users"></ul>
+  
+</div>
+<script src="dom.js"></script>
+<script>
+    const inputName=
+  function submitform(){
+        console.log(document.getElementById('name').value);
+        console.log(document.getElementById('email').value);
+        console.log(document.getElementById('phone').value);
+        console.log(document.getElementById('password').value);
+        console.log(document.getElementById('date').value);
+        console.log(document.getElementById('time').value);
+    }
+</script>
+</body>
+</html>
