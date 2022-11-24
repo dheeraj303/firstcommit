@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-image: url("contact.webp");
+        }
+        div{
+            justify-content: center;
+            display: flex;
+        }
+        form{
+            
+            border: 1px solid black;
+            margin: 0px 300px 0px 300px;
+            padding: 50px;
+           
+        }
+        input,button{
+            width:500px;
+        }
+        button{
+            padding: 5px;
+            font-size: 14px;
+            margin-top: 5px;
+            background-color:blueviolet ;
+        }
+        label{
+            text-align: start;
+        }
+      
+    </style>
+</head>
+<body>
+    <div>
+        <form id="myForm" >
+            <div class="msg"></div>
+            <h2>Book a call slot</h2>
+            <label for="">Name</label>
+            </br>
+            <input type="text" Placeholder="Enter Name" id="name">
+            </br>
+            <label for="">Email</label>
+            </br>
+            <input type="email" Placeholder="Enter Email" id="email">
+            </br>
+            <input type="submit" value="Submit">
+          </form>
+
+  
+</div>
+
+<ul class="users"></ul>
+
+
+  <script>
+  
+    const inputName=document.getElementById('name');
+    const inputEmail=document.getElementById('email');
+    document.getElementById("myForm").addEventListener("submit", myFunction);
+    
+    function myFunction(e) {
+        e.preventDefault();
+        console.log(inputName.value);
+        if(inputName.value==='' || inputEmail.value===''){
+            document.querySelector('.msg').innerHTML='enter all fields';
+            setTimeout(()=>document.querySelector('.msg').remove(),3000);
+        }
+        else{
+            console.log(inputName.value);
+           const li=document.createElement('li');
+            li.appendChild(document.createTextNode(`${inputName.value} : ${inputEmail.value}`));
+            document.querySelector('.users').appendChild(li);
+
+            inputName.value="";
+            inputEmail.value="";
+        }
+         
+   
+    }
+    </script>
+
+<script>
+
+
+//   btn.addEventListener('click',(e)=>{
+//     e.preventDefault();
+//        document.querySelector("#my-form").style.background="green"; 
+//     //    console.log(inputName.value);
+//     //    document.querySelector("#my-form").submit();
+//   });
+//   btn.addEventListener('mouseover',(e)=>{
+//     e.preventDefault();
+//        document.querySelector("#my-form").style.background="yellow"; 
+//   });
+//   btn.addEventListener('mouseout',(e)=>{
+//     e.preventDefault();
+//        document.querySelector("#my-form").style.background="red"; 
+//   });
+
+
+</script>
+</body>
+</html>
