@@ -75,7 +75,7 @@
            const li=document.createElement('li');
             li.appendChild(document.createTextNode(`${inputName.value} : ${inputEmail.value}`));
             document.querySelector('.users').appendChild(li);
-
+            localStorage.setItem(`${inputName.value}` , `${inputEmail.value}`);
             inputName.value="";
             inputEmail.value="";
         }
