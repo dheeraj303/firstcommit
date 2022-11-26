@@ -54,15 +54,33 @@
   
 </div>
 
-<ul class="users"></ul>
+<ul id="user" class="users"></ul>
 
 
   <script>
-  
+    
     const inputName=document.getElementById('name');
     const inputEmail=document.getElementById('email');
     document.getElementById("myForm").addEventListener("submit", myFunction);
-    
+    function deleteuser(email){
+                // console.log('click');
+                localStorage.removeItem(email);
+                deletefromlist(email);
+            }
+            function deletefromlist(email){
+            const parentnode=document.getElementById('user');
+            const nodedelete=document.getElementById(email);
+            if(nodedelete){
+                parentnode.removeChild(nodedelete);
+            }
+           }
+    function edituser(email){
+        localStorage.getItem(email);
+        var userdetail=JSON.parse(localStorage.getItem(email));
+        document.getElementById('name').value=userdetail.name;
+        document.getElementById('email').value=userdetail.email;
+        deletefromlist(email);
+    }
     function myFunction(e) {
         e.preventDefault();
         console.log(inputName.value);
@@ -71,24 +89,43 @@
             setTimeout(()=>document.querySelector('.msg').remove(),3000);
         }
         else{
-            console.log(inputName.value);
-           const li=document.createElement('li');
-            li.appendChild(document.createTextNode(`${inputName.value} : ${inputEmail.value}`));
-            document.querySelector('.users').appendChild(li);
+            // console.log(inputName.value);
+        //    const li=document.createElement('li');
+           const childhtml=`<li id=${inputEmail.value}> ${inputName.value} : ${inputEmail.value} <button onclick="edituser('${inputEmail.value}')">Edit</button><button onclick="deleteuser('${inputEmail.value}')">Delete</button>`;
+        //    const button=document.createElement('button');
+        //     text=document.createTextNode('Delete');
+        //     button.appendChild(text); 
+        //     button.id='dheeraj';
+        //     li.id=inputEmail.value;
+        //    li.appendChild(document.createTextNode(`${inputName.value} : ${inputEmail.value}`));
+        //     li.appendChild(button);
+            // li.appendChild(document.createElement('<button>delete</button>'))
+            console.log(childhtml);
+            const parentnode=document.querySelector('.users');
+            parentnode.innerHTML=parentnode.innerHTML+childhtml;
            class Obj{
                 constructor(name,email){
                     this.name=name;
                     this.email=email;
                 }
            }
-           
+
+           if(localStorage.getItem(inputEmail.value)!=null){
+                deletefromlist(inputEmail.value);
+           }
+
+         
+            // var btn=document.getElementById('dheeraj');
+            // btn.addEventListener('click',deletefromlist);
+          
             let obj =new Obj(`${inputName.value}`,`${inputEmail.value}`);
 
             let objserialized=JSON.stringify(obj);
-            localStorage.setItem('obj'+inputEmail.value , objserialized);
+            localStorage.setItem(inputEmail.value , objserialized);
             console.log(JSON.parse(localStorage.getItem(obj)));
             inputName.value="";
             inputEmail.value="";
+                      
         }
          
    
