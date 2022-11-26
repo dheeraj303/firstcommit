@@ -75,7 +75,14 @@
            const li=document.createElement('li');
             li.appendChild(document.createTextNode(`${inputName.value} : ${inputEmail.value}`));
             document.querySelector('.users').appendChild(li);
-            localStorage.setItem(`${inputName.value}` , `${inputEmail.value}`);
+            let obj={
+                name:`${inputName.value}`,
+                email:`${inputEmail.value}`
+            };
+
+            let objserialized=JSON.stringify(obj);
+            localStorage.setItem('obj' , objserialized);
+            console.log(JSON.parse(localStorage.getItem(obj)));
             inputName.value="";
             inputEmail.value="";
         }
