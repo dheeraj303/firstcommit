@@ -75,13 +75,17 @@
            const li=document.createElement('li');
             li.appendChild(document.createTextNode(`${inputName.value} : ${inputEmail.value}`));
             document.querySelector('.users').appendChild(li);
-            let obj={
-                name:`${inputName.value}`,
-                email:`${inputEmail.value}`
-            };
+           class Obj{
+                constructor(name,email){
+                    this.name=name;
+                    this.email=email;
+                }
+           }
+           
+            let obj =new Obj(`${inputName.value}`,`${inputEmail.value}`);
 
             let objserialized=JSON.stringify(obj);
-            localStorage.setItem('obj' , objserialized);
+            localStorage.setItem('obj'+inputEmail.value , objserialized);
             console.log(JSON.parse(localStorage.getItem(obj)));
             inputName.value="";
             inputEmail.value="";
