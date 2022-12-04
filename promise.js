@@ -40,7 +40,6 @@ function deletepost(){
         },1000);
     });
 }
-
 createpost({title:'post two',body:'this is post two'})
 .then(getposts)
 .catch(err=>console.log(err));
@@ -48,6 +47,54 @@ createpost({title:'post three',body:'this is post three'})
 .then(getposts)
 .catch(err=>console.log(err));
 console.log(posts);
+
+// deletepost().then(()=>
+// {getposts();
+//     deletepost().then(()=>{
+//         getposts();
+//         deletepost().then(()=>{
+//             getposts();
+//             deletepost().then(()=>{
+//                 getposts();
+//             }).catch(err=>console.log(err));
+//         }).catch(err=>console.log(err));
+//     }).catch(err=>console.log(err));
+// }).catch(err=>console.log(err));
+// .then(getposts).then(getposts).catch(err=>console.log(err));
+
+
+const promise1=Promise.resolve('HelloWorld');
+const promise2=10;
+const promise3=new Promise((resolve,reject)=>{
+    setTimeout(resolve,2000,'Goodbye')
+});
+
+// Promise.all([promise1,promise2,promise3]).then(values=>console.log(values));
+class User{
+    constructor(){
+        this.lastactivity=Date.now();
+    }
+    getactivity(){
+        console.log(this.lastactivity);
+    }
+}
+var u1=new User();
+function updatelastuseractiviytime(){
+    return new Promise((resolve,reject)=>{
+        u1.lastactivity=Date.now();
+        resolve();
+    })
+}
+
+Promise.all([createpost({title:'post two',body:'this is post two'})
+,updatelastuseractiviytime()]).then((values)=>{
+    console.log(posts);
+    u1.getactivity();
+});
+   
+// console.log(posts);
+// console.log(u1.lastactivity);
+
 
 deletepost().then(()=>
 {getposts();
