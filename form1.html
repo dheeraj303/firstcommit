@@ -43,6 +43,7 @@
             <label for="">Name</label>
             </br>
             <input type="text" Placeholder="Enter Name" id="name">
+            <input type="hidden" Placeholder="Enter Name" id="id">
             </br>
             <label for="">Email</label>
             </br>
@@ -61,11 +62,17 @@
     
     const inputName=document.getElementById('name');
     const inputEmail=document.getElementById('email');
+    const id=document.getElementById('id');
     document.getElementById("myForm").addEventListener("submit", myFunction);
-    function deleteuser(email){
+    function deleteuser(id){
                 // console.log('click');
-                localStorage.removeItem(email);
-                deletefromlist(email);
+                // localStorage.removeItem(email);
+            axios.delete(`https://crudcrud.com/api/4f9826ee7acb42bab3794ad23ddf0959/appointmentData/${id}`)
+            .then(()=>{
+                deletefromlist(id);
+            })
+
+               
             }
             function deletefromlist(email){
             const parentnode=document.getElementById('user');
@@ -74,12 +81,36 @@
                 parentnode.removeChild(nodedelete);
             }
            }
-    function edituser(email){
-        localStorage.getItem(email);
-        var userdetail=JSON.parse(localStorage.getItem(email));
-        document.getElementById('name').value=userdetail.name;
-        document.getElementById('email').value=userdetail.email;
+    function edituser(id){
+        axios.get(`https://crudcrud.com/api/4f9826ee7acb42bab3794ad23ddf0959/appointmentData/${id}`)
+    .then((response)=>{
+        document.getElementById('name').value=response.data.name;
+        document.getElementById('email').value=response.data.email;
+        document.getElementById('id').value=response.data._id;
+    })
+
+
+        // localStorage.getItem(email);
+        // var userdetail=JSON.parse(localStorage.getItem(email));
+        // document.getElementById('name').value=userdetail.name;
+        // document.getElementById('email').value=userdetail.email;
         deletefromlist(email);
+    }
+    window.addEventListener('DOMContentLoaded',getuser);
+
+    function getuser(){
+    axios.get('https://crudcrud.com/api/4f9826ee7acb42bab3794ad23ddf0959/appointmentData')
+    .then((response)=>{
+        for(var i=0;i<response.data.length;i++){
+            viewuser(response.data[i]);
+            // console.log(response.data[i].name);
+        }
+    })
+}
+    function viewuser(data){
+        const childhtml=`<li id=${data._id}> ${data.name} : ${data.email} <button onclick="edituser('${data._id}')">Edit</button><button onclick="deleteuser('${data._id}')">Delete</button>`;
+            const parentnode=document.querySelector('.users');
+            parentnode.innerHTML=parentnode.innerHTML+childhtml;
     }
     function myFunction(e) {
         e.preventDefault();
@@ -91,7 +122,7 @@
         else{
             // console.log(inputName.value);
         //    const li=document.createElement('li');
-           const childhtml=`<li id=${inputEmail.value}> ${inputName.value} : ${inputEmail.value} <button onclick="edituser('${inputEmail.value}')">Edit</button><button onclick="deleteuser('${inputEmail.value}')">Delete</button>`;
+        //    const childhtml=`<li id=${inputEmail.value}> ${inputName.value} : ${inputEmail.value} <button onclick="edituser('${inputEmail.value}')">Edit</button><button onclick="deleteuser('${inputEmail.value}')">Delete</button>`;
         //    const button=document.createElement('button');
         //     text=document.createTextNode('Delete');
         //     button.appendChild(text); 
@@ -100,9 +131,9 @@
         //    li.appendChild(document.createTextNode(`${inputName.value} : ${inputEmail.value}`));
         //     li.appendChild(button);
             // li.appendChild(document.createElement('<button>delete</button>'))
-            console.log(childhtml);
-            const parentnode=document.querySelector('.users');
-            parentnode.innerHTML=parentnode.innerHTML+childhtml;
+            // console.log(childhtml);
+            // const parentnode=document.querySelector('.users');
+            // parentnode.innerHTML=parentnode.innerHTML+childhtml;
            class Obj{
                 constructor(name,email){
                     this.name=name;
@@ -119,9 +150,22 @@
             // btn.addEventListener('click',deletefromlist);
           
             let obj =new Obj(`${inputName.value}`,`${inputEmail.value}`);
-            axios.post('https://crudcrud.com/api/6bac1d6c639249fa93f46625fd242f27/appointmentData',obj)
-            .then((response)=>console.log(response))
+                alert(id.value);
+            if(id.value===''){
+            axios.post('https://crudcrud.com/api/4f9826ee7acb42bab3794ad23ddf0959/appointmentData',obj)
+            .then((response)=>
+            {console.log(response)
+            getuser();
+            })
             .catch((err)=>console.log(err));
+        }else{
+            axios.put(`https://crudcrud.com/api/4f9826ee7acb42bab3794ad23ddf0959/appointmentData/${id.value}`,obj)
+            .then((response)=>
+            {console.log(response)
+            getuser();
+            })
+            .catch((err)=>console.log(err));
+        }
             // let objserialized=JSON.stringify(obj);
             // localStorage.setItem(inputEmail.value , objserialized);
             // console.log(JSON.parse(localStorage.getItem(obj)));
